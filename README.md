@@ -9,7 +9,7 @@ Telos collaboration has an interesting paper: [2504.01876](https://arxiv.org/pdf
 Should add in features like supported architectures, fermion discretizations, ...
 
 - [BQCD](https://www.rrz.uni-hamburg.de/services/hpc/bqcd.html)
-- [Bridge++](https://bridge.kek.jp/Lattice-code}{Bridge++)
+- [Bridge++](https://bridge.kek.jp/Lattice-code)
 - [Chroma](https://jeffersonlab.github.io/chroma)
 - [cl2qcd](https://gitlab.itp.uni-frankfurt.de/lattice-qcd/ag-philipsen/cl2qcd)
 - [Grid](https://github.com/paboyle/Grid/tree/develop/Grid)
