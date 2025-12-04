@@ -6,7 +6,8 @@ Telos collaboration has an interesting paper: [2504.01876](https://arxiv.org/pdf
 
 
 # Lattice QCD simulation codes
-Should add in features like supported architectures, fermion discretizations, ...
+Should add in features like language, supported architectures, fermion discretizations, ...
+
 
 - [BQCD](https://www.rrz.uni-hamburg.de/services/hpc/bqcd.html)
 - [Bridge++](https://bridge.kek.jp/Lattice-code)
@@ -20,7 +21,19 @@ Should add in features like supported architectures, fermion discretizations, ..
 - [SIMULATeQCD](https://github.com/LatticeQCD/SIMULATeQCD)
 - [tmLQCD](https://github.com/etmc/tmLQCD)
 
+# Solver-focused codes
+
+- [DDalphaAMG](https://github.com/mrottmann/DDalphaAMG)
+- [DDalphaAMG (CUDA port)](https://github.com/Gustavroot/DDalphaAMG)
+- [QUDA](https://github.com/lattice/quda)
+
 # Lattice simulation codes focused on algorithmic developments
 This probably deserves multiple subcategories
 
 # Analysis tools
+
+- [ADerrors.jl](https://igit.ific.uv.es/alramos/aderrors.jl)
+- [pyerrors](https://github.com/fjosw/pyerrors)
+- [pyobs](https://github.com/mbruno46/pyobs)
+- [py-uwerr](https://github.com/dhesse/py-uwerr)
+- [UWerr](https://www.physik.hu-berlin.de/de/com/ALPHAsoft)
