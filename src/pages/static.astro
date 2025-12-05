@@ -53,6 +53,9 @@ function getDomain(url: string): string {
 
 // Find repository link for title, or use first link
 function getTitleLink(entry: typeof entriesData[0]) {
+  if (!entry.links || entry.links.length === 0) {
+    return undefined;
+  }
   return entry.links.find(link => link.title.toLowerCase() === 'repository') || entry.links[0];
 }
 ---
@@ -109,9 +112,13 @@ function getTitleLink(entry: typeof entriesData[0]) {
                   <li class="entry">
                     <div class="entry-header">
                       <h3 class="entry-title">
-                        <a href={titleLink.url} target="_blank" rel="noopener noreferrer">
-                          {entry.title}
-                        </a>
+                        {titleLink ? (
+                          <a href={titleLink.url} target="_blank" rel="noopener noreferrer">
+                            {entry.title}
+                          </a>
+                        ) : (
+                          entry.title
+                        )}
                       </h3>
                       {entry.tags && entry.tags.length > 0 && (
                         <div class="entry-tags">
