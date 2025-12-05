@@ -1,0 +1,10 @@
+title: pyerrors
+description: Error propagation and analysis for lattice QCD
+links:
+  - title: Repository
+    url: https://github.com/fjosw/pyerrors
+tags:
+  - python
+  - analysis
+  - errors
+category: analysis

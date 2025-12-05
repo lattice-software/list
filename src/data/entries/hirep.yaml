@@ -1,0 +1,11 @@
+title: HiRep
+description: Lattice QCD code with CUDA support
+links:
+  - title: Repository
+    url: https://github.com/claudiopica/HiRep/tree/HiRep-CUDA
+tags:
+  - qcd
+  - cuda
+  - c++
+  - gpu
+category: simulation

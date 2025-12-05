@@ -1,0 +1,10 @@
+title: py-uwerr
+description: Python implementation of UWerr for error analysis
+links:
+  - title: Repository
+    url: https://github.com/dhesse/py-uwerr
+tags:
+  - python
+  - analysis
+  - errors
+category: analysis

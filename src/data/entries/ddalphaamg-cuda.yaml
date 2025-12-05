@@ -1,0 +1,11 @@
+title: DDalphaAMG (CUDA port)
+description: CUDA port of DDalphaAMG algebraic multigrid solver
+links:
+  - title: Repository
+    url: https://github.com/Gustavroot/DDalphaAMG
+tags:
+  - qcd
+  - solver
+  - cuda
+  - gpu
+category: solver

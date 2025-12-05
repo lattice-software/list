@@ -1,0 +1,9 @@
+title: MILC
+description: MIMD Lattice Computation code suite
+links:
+  - title: Repository
+    url: https://github.com/milc-qcd/milc_qcd
+tags:
+  - qcd
+  - c
+category: simulation

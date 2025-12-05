@@ -1,0 +1,9 @@
+title: DDalphaAMG
+description: Algebraic multigrid solver for lattice QCD
+links:
+  - title: Repository
+    url: https://github.com/mrottmann/DDalphaAMG
+tags:
+  - qcd
+  - solver
+category: solver

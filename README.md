@@ -1,39 +1,80 @@
-# List of useful lattice software
+# Lattice QFT Software List
 
-For now, please just add a link below (maybe with some text or a paper link for explanation).
+**[View List →](https://lattice-software.github.io/list)**
 
-Telos collaboration has an interesting paper: [2504.01876](https://arxiv.org/pdf/2504.01876)
-
-
-# Lattice QCD simulation codes
-Should add in features like language, supported architectures, fermion discretizations, ...
+Community-curated list of useful software and repositories for lattice quantum field theory.
 
 
-- [BQCD](https://www.rrz.uni-hamburg.de/services/hpc/bqcd.html)
-- [Bridge++](https://bridge.kek.jp/Lattice-code)
-- [Chroma](https://jeffersonlab.github.io/chroma)
-- [cl2qcd](https://gitlab.itp.uni-frankfurt.de/lattice-qcd/ag-philipsen/cl2qcd)
-- [Grid](https://github.com/paboyle/Grid/tree/develop/Grid)
-- [HiRep](https://github.com/claudiopica/HiRep/tree/HiRep-CUDA)
-- [MILC](https://github.com/milc-qcd/milc_qcd)
-- [openQCD](https://luscher.web.cern.ch/luscher/openQCD)
-- [openQxD](https://gitlab.com/rcstar/openQxD)
-- [SIMULATeQCD](https://github.com/LatticeQCD/SIMULATeQCD)
-- [tmLQCD](https://github.com/etmc/tmLQCD)
+## How to Contribute
 
-# Solver-focused codes
+You can either contribute to the repository directly (commit or pull request), or add an issue with new entries or corrections.
 
-- [DDalphaAMG](https://github.com/mrottmann/DDalphaAMG)
-- [DDalphaAMG (CUDA port)](https://github.com/Gustavroot/DDalphaAMG)
-- [QUDA](https://github.com/lattice/quda)
+### Adding a New Entry
 
-# Lattice simulation codes focused on algorithmic developments
-This probably deserves multiple subcategories
+Create a new YAML file in `src/data/entries/`.
 
-# Analysis tools
+**Filename rules:**
+- Use lowercase
+- Use hyphens for spaces (e.g., `my-software.yaml`)
+- No special characters except hyphens
 
-- [ADerrors.jl](https://igit.ific.uv.es/alramos/aderrors.jl)
-- [pyerrors](https://github.com/fjosw/pyerrors)
-- [pyobs](https://github.com/mbruno46/pyobs)
-- [py-uwerr](https://github.com/dhesse/py-uwerr)
-- [UWerr](https://www.physik.hu-berlin.de/de/com/ALPHAsoft)
+### Entry Structure
+
+Each entry file should contain a YAML object with the following fields:
+
+- `title`: Name of the software or resource
+- `description`: Brief description (one sentence, can span multiple lines in YAML)
+- `links`: Array of link objects, each with:
+  - `title`: Link label (e.g., "Repository", "Documentation", "Paper")
+  - `url`: Full URL
+- `tags`: Array of tags (strings)
+- `category`: Category string (see below)
+
+**Note:** The `id` field is automatically derived from the filename, so don't include it in the YAML.
+
+Example: Create `src/data/entries/example-software.yaml`:
+
+```yaml
+title: Example Software
+description: A useful tool for lattice calculations
+links:
+  - title: Repository
+    url: https://github.com/example/software
+  - title: Documentation
+    url: https://example.com/docs
+tags:
+  - qcd
+  - c++
+  - gpu
+category: simulation
+```
+
+### Categories vs Tags
+
+The intention is that **categories** are high-level types that classify what the software/resource is, each entry should have one.
+**Tags** are specific attributes that describe technical details, capabilities, or domains.
+There is no strict list of tags; new tags can just be added as needed by putting them in the `tags` array.
+
+### Recommendations
+
+1. **Links**: Always include a "Repository" link if available.
+   The title will automatically link to the repository.
+
+2. **Tags**: Be consistent with existing tags.
+   Check the current tags in the YAML file before adding new ones.
+
+3. **Description**: Keep it concise (one sentence).
+   Focus on what the software does.
+
+4. **Filename**: Use lowercase, hyphenated filenames that match the software name.
+   The filename becomes the entry ID automatically.
+
+5. **Multiple links**: You can add multiple links (Repository, Documentation, Paper, Tutorial, etc.).
+   All will be displayed in the card footer.
+
+6. **One file per entry**: Each entry gets its own YAML file.
+   This makes it easier to manage and avoids merge conflicts.
+
+## Development
+
+For installation and development instructions, see [README-SETUP.md](README-SETUP.md).

@@ -1,0 +1,11 @@
+title: QUDA
+description: Lattice QCD library for GPUs
+links:
+  - title: Repository
+    url: https://github.com/lattice/quda
+tags:
+  - qcd
+  - solver
+  - cuda
+  - gpu
+category: solver

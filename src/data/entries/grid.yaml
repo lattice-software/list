@@ -1,0 +1,10 @@
+title: Grid
+description: Lattice QCD framework with GPU support
+links:
+  - title: Repository
+    url: https://github.com/paboyle/Grid/tree/develop/Grid
+tags:
+  - qcd
+  - c++
+  - gpu
+category: simulation

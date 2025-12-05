@@ -1,0 +1,9 @@
+title: Chroma
+description: Lattice QCD data analysis framework
+links:
+  - title: Repository
+    url: https://jeffersonlab.github.io/chroma
+tags:
+  - qcd
+  - c++
+category: analysis

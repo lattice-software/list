@@ -1,0 +1,11 @@
+title: SIMULATeQCD
+description: SIMULATeQCD is a multi-GPU Lattice QCD framework that makes it easy for physicists to implement lattice QCD formulas while still providing competitive performance.
+links:
+  - title: Repository
+    url: https://github.com/LatticeQCD/SIMULATeQCD
+tags:
+  - qcd
+  - cuda
+  - c++
+  - gpu
+category: simulation

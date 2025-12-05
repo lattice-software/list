@@ -1,0 +1,9 @@
+title: openQCD
+description: Open source lattice QCD simulation code
+links:
+  - title: Repository
+    url: https://luscher.web.cern.ch/luscher/openQCD
+tags:
+  - qcd
+  - c
+category: simulation

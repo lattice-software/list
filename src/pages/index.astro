@@ -1,0 +1,519 @@
+---
+import EntryCard from '../components/EntryCard.astro';
+import yaml from 'js-yaml';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+
+// Get entries directory relative to project root
+const entriesDir = join(process.cwd(), 'src', 'data', 'entries');
+
+// Load all YAML entry files
+const entryFiles = readdirSync(entriesDir).filter(f => f.endsWith('.yaml'));
+
+// Convert to array with IDs derived from filenames
+const entriesData = entryFiles.map(filename => {
+  const id = filename.replace('.yaml', '');
+  const filePath = join(entriesDir, filename);
+  const fileContent = readFileSync(filePath, 'utf-8');
+  const data = yaml.load(fileContent) as any;
+  return {
+    id,
+    ...data
+  };
+});
+
+// Get all unique tags and categories
+const allTags = [...new Set(entriesData.flatMap(entry => entry.tags))].sort();
+const allCategories = [...new Set(entriesData.map(entry => entry.category))].sort();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Community-curated list of useful software and repositories for lattice quantum field theory" />
+    <title>Lattice QFT Software List</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="https://github.com/lattice-software/list" target="_blank" rel="noopener noreferrer" class="github-link">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>See on GitHub</span>
+        </a>
+        <h1>Lattice QFT Software</h1>
+        <p class="subtitle">Community-curated list of useful software and repositories for lattice quantum field theory</p>
+      </header>
+
+      <div class="controls">
+        <div class="search-container">
+          <input
+            type="text"
+            id="search-bar"
+            placeholder="Search by name, description, or tag..."
+            autocomplete="off"
+          />
+          <button id="clear-search" class="clear-btn" style="display: none;">Clear</button>
+        </div>
+
+        <div class="filters">
+          <div class="filter-section">
+            <h3>Filter by Tag:</h3>
+            <div class="tag-list" id="tag-list">
+              {allTags.map(tag => (
+                <span class="filter-tag" data-tag={tag}>{tag}</span>
+              ))}
+            </div>
+          </div>
+
+          <div class="filter-section">
+            <h3>Filter by Category:</h3>
+            <div class="category-list" id="category-list">
+              {allCategories.map(category => (
+                <span class="filter-category" data-category={category}>{category}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="results-info">
+          <span id="results-count">{entriesData.length}</span> entries shown
+        </div>
+      </div>
+
+      <div class="entries-grid" id="entries-grid">
+        {entriesData.map(entry => (
+          <EntryCard entry={entry} />
+        ))}
+      </div>
+
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <p class="empty-state-text">No entries match your filters.</p>
+        <p class="empty-state-hint">Try adjusting your search or filters.</p>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  :global(html) {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .github-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .github-link:hover {
+    color: #0f172a;
+    background: #f1f5f9;
+  }
+
+  .github-link svg {
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    color: #64748b;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .controls {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .search-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  #search-bar {
+    flex: 1;
+    padding: 0.875rem 1.125rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: #f8fafc;
+  }
+
+  #search-bar::placeholder {
+    color: #94a3b8;
+  }
+
+  #search-bar:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  }
+
+  .clear-btn {
+    padding: 0.875rem 1.5rem;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .clear-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+  }
+
+  .clear-btn:active {
+    transform: translateY(0);
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .filter-section h3 {
+    margin: 0 0 1rem 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tag-list,
+  .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .filter-tag {
+    background: #eff6ff;
+    color: #1e40af;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    border: 1.5px solid transparent;
+    font-weight: 500;
+  }
+
+  .filter-tag:hover {
+    background: #dbeafe;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.15);
+  }
+
+  .filter-tag.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #2563eb;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+  }
+
+  .filter-category {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    border: 1.5px solid transparent;
+    font-weight: 500;
+  }
+
+  .filter-category:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(71, 85, 105, 0.15);
+  }
+
+  .filter-category.active {
+    background: #6366f1;
+    color: white;
+    border-color: #4f46e5;
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+  }
+
+  .results-info {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.9375rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .results-info #results-count {
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  .entries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-top: 2rem;
+  }
+
+  .empty-state-text {
+    font-size: 1.25rem;
+    color: #475569;
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+  }
+
+  .empty-state-hint {
+    font-size: 0.9375rem;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 2rem 1rem;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+    }
+
+    .github-link {
+      position: static;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+    }
+
+    .controls {
+      padding: 1.5rem;
+    }
+
+    .entries-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .search-container {
+      flex-direction: column;
+    }
+
+    .clear-btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  const searchBar = document.getElementById('search-bar');
+  const clearBtn = document.getElementById('clear-search');
+  const entriesGrid = document.getElementById('entries-grid');
+  const entries = Array.from(document.querySelectorAll('.entry-card'));
+  const filterTags = Array.from(document.querySelectorAll('.filter-tag'));
+  const filterCategories = Array.from(document.querySelectorAll('.filter-category'));
+  const cardTags = Array.from(document.querySelectorAll('.tag'));
+  const resultsCount = document.getElementById('results-count');
+  const emptyState = document.getElementById('empty-state');
+
+  let activeTags = [];
+  let activeCategory = null;
+  let searchQuery = '';
+
+  function updateResults() {
+    let visibleCount = 0;
+
+    entries.forEach(card => {
+      const cardTitle = card.querySelector('.card-title')?.textContent?.toLowerCase() || '';
+      const cardDescription = card.querySelector('.card-description')?.textContent?.toLowerCase() || '';
+      const cardTagsString = card.getAttribute('data-tags')?.toLowerCase() || '';
+      const cardTagsArray = cardTagsString ? cardTagsString.split(',').map(t => t.trim()) : [];
+      const cardCategory = card.getAttribute('data-category') || '';
+
+      const matchesSearch = !searchQuery ||
+        cardTitle.includes(searchQuery) ||
+        cardDescription.includes(searchQuery) ||
+        cardTagsString.includes(searchQuery);
+
+      // Entry must have ALL selected tags (AND logic)
+      const matchesTags = activeTags.length === 0 ||
+        activeTags.every(tag => cardTagsArray.includes(tag.toLowerCase()));
+      const matchesCategory = !activeCategory || cardCategory === activeCategory;
+
+      if (matchesSearch && matchesTags && matchesCategory) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    resultsCount.textContent = visibleCount.toString();
+
+    if (visibleCount === 0) {
+      emptyState.style.display = 'block';
+    } else {
+      emptyState.style.display = 'none';
+    }
+  }
+
+  function toggleTag(tag) {
+    const tagLower = tag.toLowerCase();
+    const index = activeTags.indexOf(tagLower);
+    if (index > -1) {
+      activeTags.splice(index, 1);
+    } else {
+      activeTags.push(tagLower);
+    }
+    updateTagUI();
+    updateResults();
+  }
+
+  function updateTagUI() {
+    filterTags.forEach(ft => {
+      const tagValue = ft.getAttribute('data-tag');
+      if (activeTags.includes(tagValue.toLowerCase())) {
+        ft.classList.add('active');
+      } else {
+        ft.classList.remove('active');
+      }
+    });
+  }
+
+  function setActiveCategory(category) {
+    activeCategory = category;
+    filterCategories.forEach(fc => {
+      if (fc.getAttribute('data-category') === category) {
+        fc.classList.add('active');
+      } else {
+        fc.classList.remove('active');
+      }
+    });
+    updateResults();
+  }
+
+  // Search bar
+  searchBar.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    clearBtn.style.display = searchQuery ? 'block' : 'none';
+    updateResults();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchBar.value = '';
+    searchQuery = '';
+    clearBtn.style.display = 'none';
+    updateResults();
+  });
+
+  // Filter tags
+  filterTags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      const tagValue = tag.getAttribute('data-tag');
+      toggleTag(tagValue);
+    });
+  });
+
+  // Filter categories
+  filterCategories.forEach(category => {
+    category.addEventListener('click', () => {
+      const categoryValue = category.getAttribute('data-category');
+      if (activeCategory === categoryValue) {
+        setActiveCategory(null);
+      } else {
+        setActiveCategory(categoryValue);
+      }
+    });
+  });
+
+  // Card tags (clicking a tag in a card)
+  cardTags.forEach(tag => {
+    tag.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const tagValue = tag.getAttribute('data-tag');
+      toggleTag(tagValue);
+      searchBar.value = '';
+      searchQuery = '';
+      clearBtn.style.display = 'none';
+    });
+  });
+</script>

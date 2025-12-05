@@ -1,0 +1,9 @@
+title: bijx
+description: Lattice QCD sampling and configuration generation tools
+links:
+  - title: Repository
+    url: https://github.com/mathisgerdes/bijx
+tags:
+  - qcd
+  - sampling
+category: simulation

@@ -1,0 +1,9 @@
+title: openQxD
+description: Lattice QCD code
+links:
+  - title: Repository
+    url: https://gitlab.com/rcstar/openQxD
+tags:
+  - qcd
+  - c++
+category: simulation

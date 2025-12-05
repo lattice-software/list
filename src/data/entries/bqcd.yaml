@@ -1,0 +1,9 @@
+title: BQCD
+description: Lattice QCD simulation code
+links:
+  - title: Repository
+    url: https://www.rrz.uni-hamburg.de/services/hpc/bqcd.html
+tags:
+  - qcd
+  - c++
+category: simulation

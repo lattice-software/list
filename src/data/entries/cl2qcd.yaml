@@ -1,0 +1,11 @@
+title: cl2qcd
+description: OpenCL-based lattice QCD code
+links:
+  - title: Repository
+    url: https://gitlab.itp.uni-frankfurt.de/lattice-qcd/ag-philipsen/cl2qcd
+tags:
+  - qcd
+  - opencl
+  - c++
+  - gpu
+category: simulation

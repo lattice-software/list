@@ -1,0 +1,10 @@
+title: ADerrors.jl
+description: Automatic differentiation for error propagation in Julia
+links:
+  - title: Repository
+    url: https://igit.ific.uv.es/alramos/aderrors.jl
+tags:
+  - julia
+  - analysis
+  - errors
+category: analysis
