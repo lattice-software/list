@@ -1,5 +1,5 @@
 title: Bridge++
-description: Lattice QCD code framework
+description: Bridge++ is a code set for numerical simulations of lattice gauge theories including QCD
 links:
   - title: Repository
     url: https://bridge.kek.jp/Lattice-code

@@ -1,9 +1,12 @@
 title: bijx
-description: Lattice QCD sampling and configuration generation tools
+description:
+  Normalizing flow toolkit including continuous flows and Lie group operations
 links:
   - title: Repository
     url: https://github.com/mathisgerdes/bijx
 tags:
-  - qcd
+  - machine-learning
   - sampling
+  - flows
+  - jax
 category: simulation

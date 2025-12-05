@@ -1,8 +1,10 @@
 title: QUDA
-description: Lattice QCD library for GPUs
+description: QUDA is a library for performing calculations in lattice QCD on GPUs.
 links:
   - title: Repository
     url: https://github.com/lattice/quda
+  - title: Documentation
+    url: https://lattice.github.io/quda/
 tags:
   - qcd
   - solver

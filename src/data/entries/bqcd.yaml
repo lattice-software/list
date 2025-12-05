@@ -1,5 +1,6 @@
 title: BQCD
-description: Lattice QCD simulation code
+description:
+  BQCD is a Hybrid Monte-Carlo program for simulating lattice QCD with dynamical Wilson fermions
 links:
   - title: Repository
     url: https://www.rrz.uni-hamburg.de/services/hpc/bqcd.html

@@ -1,5 +1,5 @@
 title: MILC
-description: MIMD Lattice Computation code suite
+description: MILC collaboration code for lattice QCD calculations
 links:
   - title: Repository
     url: https://github.com/milc-qcd/milc_qcd

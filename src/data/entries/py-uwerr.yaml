@@ -1,5 +1,5 @@
 title: py-uwerr
-description: Python implementation of UWerr for error analysis
+description: Python implementation of Monte Carlo error analysis a la Wolff.
 links:
   - title: Repository
     url: https://github.com/dhesse/py-uwerr

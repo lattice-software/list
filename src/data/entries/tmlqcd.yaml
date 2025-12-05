@@ -1,5 +1,7 @@
 title: tmLQCD
-description: Twisted mass lattice QCD code
+description:
+  tmLQCD is a freely available software suite providing a set of tools to be used in lattice QCD simulations.
+  This is mainly a HMC implementation (including PHMC and RHMC) for Wilson, Wilson Clover and Wilson twisted mass fermions and inverter for different versions of the Dirac operator.
 links:
   - title: Repository
     url: https://github.com/etmc/tmLQCD

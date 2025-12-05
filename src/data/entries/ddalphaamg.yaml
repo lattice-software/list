@@ -1,5 +1,5 @@
 title: DDalphaAMG
-description: Algebraic multigrid solver for lattice QCD
+description: A multigrid solver library for inverting Wilson Clover fermions from lattice QCD
 links:
   - title: Repository
     url: https://github.com/mrottmann/DDalphaAMG

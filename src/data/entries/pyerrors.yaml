@@ -1,5 +1,6 @@
 title: pyerrors
-description: Error propagation and analysis for lattice QCD
+description:
+  Error propagation and statistical analysis for Monte Carlo simulations in lattice QCD and statistical mechanics using autograd.
 links:
   - title: Repository
     url: https://github.com/fjosw/pyerrors

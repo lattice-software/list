@@ -1,5 +1,6 @@
 title: ADerrors.jl
-description: Automatic differentiation for error propagation in Julia
+description:
+  Error propagation and analysis of Monte Carlo data with the Γ method and automatic differentiation in Julia
 links:
   - title: Repository
     url: https://igit.ific.uv.es/alramos/aderrors.jl

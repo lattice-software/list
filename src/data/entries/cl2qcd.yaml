@@ -1,5 +1,6 @@
 title: cl2qcd
-description: OpenCL-based lattice QCD code
+description:
+  CL2QCD is a Lattice QCD application based on OpenCL, applicable to CPUs and GPUs.
 links:
   - title: Repository
     url: https://gitlab.itp.uni-frankfurt.de/lattice-qcd/ag-philipsen/cl2qcd

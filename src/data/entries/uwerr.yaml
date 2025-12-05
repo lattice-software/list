@@ -1,5 +1,6 @@
 title: UWerr
-description: Error analysis tool for lattice QCD
+description:
+  Matlab function (m-file) UWerr.m Version6 described in the paper `Monte Carlo errors with less errors' by Ulli Wolff (hep-lat/0306017v4 at arXiv.org as Postscript or PDF).
 links:
   - title: Repository
     url: https://www.physik.hu-berlin.de/de/com/ALPHAsoft

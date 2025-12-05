@@ -1,8 +1,8 @@
 title: Grid
-description: Lattice QCD framework with GPU support
+description: Data parallel C++ mathematical object library
 links:
   - title: Repository
-    url: https://github.com/paboyle/Grid/tree/develop/Grid
+    url: https://github.com/paboyle/Grid/
 tags:
   - qcd
   - c++
