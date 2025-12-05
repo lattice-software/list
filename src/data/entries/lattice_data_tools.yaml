@@ -1,5 +1,5 @@
 title: Lattice Data Tools
-description: Software tools for the statistical analysis of lattice data: $\Gamma$ method, bootstraps, jackknifes, GEVP, curve fitting, Akaike Information Criterion (AIC), $(g-2)$'s HVP and HLbL contributions, physical point tuning, Nested Sampling, standard plotting
+description: Software tools for the statistical analysis of lattice data. $\Gamma$ method, bootstraps, jackknifes, GEVP, curve fitting, Akaike Information Criterion (AIC), $(g-2)$'s HVP and HLbL contributions, physical point tuning, Nested Sampling, standard plotting
 links:
   - title: Repository
     url: https://github.com/simone-romiti/lattice_data_tools
