@@ -33,9 +33,33 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Community-curated list of useful software and repositories for lattice quantum field theory" />
     <title>Lattice QFT Software List</title>
+    <script is:inline>
+      (function() {
+        const THEME_STORAGE_KEY = 'theme-preference';
+        const html = document.documentElement;
+
+        function getSystemTheme() {
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function getStoredTheme() {
+          return localStorage.getItem(THEME_STORAGE_KEY);
+        }
+
+        const stored = getStoredTheme() || 'system';
+        const applied = stored === 'system' ? getSystemTheme() : stored;
+        html.setAttribute('data-theme', applied);
+      })();
+    </script>
   </head>
   <body>
     <div class="container">
+      <button id="theme-toggle" class="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+        <svg class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path class="icon-sun" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          <path class="icon-moon" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+        </svg>
+      </button>
       <header>
         <a href="https://github.com/lattice-software/list" target="_blank" rel="noopener noreferrer" class="github-link">
           <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
@@ -100,15 +124,87 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
 <style>
   :global(html) {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    color: #1f2937;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color-scheme: light dark;
+  }
+
+  :global(html[data-theme="light"]) {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #475569;
+    --text-tertiary: #64748b;
+    --text-quaternary: #94a3b8;
+    --border-primary: #e2e8f0;
+    --border-secondary: #cbd5e1;
+    --border-tertiary: #f1f5f9;
+    --accent-primary: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: #eff6ff;
+    --accent-light-hover: #dbeafe;
+    --accent-dark: #1e40af;
+    --tag-bg: #eff6ff;
+    --tag-text: #1e40af;
+    --tag-hover-bg: #dbeafe;
+    --category-bg: #f1f5f9;
+    --category-text: #475569;
+    --category-hover-bg: #e2e8f0;
+    --category-active-bg: #6366f1;
+    --category-active-text: #ffffff;
+    --shadow-sm: rgba(0, 0, 0, 0.05);
+    --shadow-md: rgba(30, 64, 175, 0.15);
+    --shadow-accent: rgba(59, 130, 246, 0.1);
+    --shadow-accent-md: rgba(59, 130, 246, 0.3);
+    --shadow-category: rgba(99, 102, 241, 0.3);
+    --shadow-red: rgba(239, 68, 68, 0.3);
+    --button-red: #ef4444;
+    --button-red-hover: #dc2626;
+  }
+
+  :global(html[data-theme="dark"]) {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #64748b;
+    --text-quaternary: #94a3b8;
+    --border-primary: #334155;
+    --border-secondary: #475569;
+    --border-tertiary: #334155;
+    --accent-primary: #60a5fa;
+    --accent-hover: #3b82f6;
+    --accent-light: #1e3a8a;
+    --accent-light-hover: #1e40af;
+    --accent-dark: #93c5fd;
+    --tag-bg: #1e3a8a;
+    --tag-text: #93c5fd;
+    --tag-hover-bg: #1e40af;
+    --category-bg: #334155;
+    --category-text: #cbd5e1;
+    --category-hover-bg: #475569;
+    --category-active-bg: #6366f1;
+    --category-active-text: #ffffff;
+    --shadow-sm: rgba(0, 0, 0, 0.3);
+    --shadow-md: rgba(30, 64, 175, 0.3);
+    --shadow-accent: rgba(96, 165, 250, 0.15);
+    --shadow-accent-md: rgba(96, 165, 250, 0.3);
+    --shadow-category: rgba(99, 102, 241, 0.4);
+    --shadow-red: rgba(239, 68, 68, 0.4);
+    --button-red: #ef4444;
+    --button-red-hover: #f87171;
+  }
+
+  :global(html) {
+    color: var(--text-primary);
   }
 
   :global(body) {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%);
+    background: linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 100%);
     min-height: 100vh;
   }
 
@@ -131,7 +227,7 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #64748b;
+    color: var(--text-tertiary);
     text-decoration: none;
     font-size: 0.9375rem;
     font-weight: 500;
@@ -141,8 +237,57 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
   }
 
   .github-link:hover {
-    color: #0f172a;
-    background: #f1f5f9;
+    color: var(--text-primary);
+    background: var(--bg-card);
+  }
+
+  .theme-toggle {
+    position: fixed;
+    left: 1.5rem;
+    top: 1.5rem;
+    z-index: 1000;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px var(--shadow-sm);
+  }
+
+  .theme-toggle:hover {
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border-color: var(--border-secondary);
+    box-shadow: 0 4px 12px var(--shadow-sm);
+    transform: translateY(-1px);
+  }
+
+  .theme-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon-sun {
+    display: block;
+  }
+
+  .icon-moon {
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .icon-sun {
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .icon-moon {
+    display: block;
   }
 
   .github-link svg {
@@ -153,26 +298,26 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
     font-size: 3rem;
     font-weight: 700;
     margin: 0 0 0.75rem 0;
-    color: #0f172a;
+    color: var(--text-primary);
     letter-spacing: -0.02em;
     line-height: 1.1;
   }
 
   .subtitle {
     font-size: 1.25rem;
-    color: #64748b;
+    color: var(--text-tertiary);
     margin: 0;
     font-weight: 400;
     line-height: 1.5;
   }
 
   .controls {
-    background: white;
-    border: 1px solid #e2e8f0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 12px;
     padding: 2rem;
     margin-bottom: 2.5rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px 0 var(--shadow-sm);
   }
 
   .search-container {
@@ -185,27 +330,28 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
   #search-bar {
     flex: 1;
     padding: 0.875rem 1.125rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-primary);
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.2s ease;
-    background: #f8fafc;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
   }
 
   #search-bar::placeholder {
-    color: #94a3b8;
+    color: var(--text-quaternary);
   }
 
   #search-bar:focus {
     outline: none;
-    border-color: #3b82f6;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-primary);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 4px var(--shadow-accent);
   }
 
   .clear-btn {
     padding: 0.875rem 1.5rem;
-    background: #ef4444;
+    background: var(--button-red);
     color: white;
     border: none;
     border-radius: 8px;
@@ -217,9 +363,9 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
   }
 
   .clear-btn:hover {
-    background: #dc2626;
+    background: var(--button-red-hover);
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 4px 6px -1px var(--shadow-red);
   }
 
   .clear-btn:active {
@@ -236,7 +382,7 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
     margin: 0 0 1rem 0;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #475569;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -249,8 +395,8 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
   }
 
   .filter-tag {
-    background: #eff6ff;
-    color: #1e40af;
+    background: var(--tag-bg);
+    color: var(--tag-text);
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-size: 0.875rem;
@@ -262,21 +408,21 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
   }
 
   .filter-tag:hover {
-    background: #dbeafe;
+    background: var(--tag-hover-bg);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.15);
+    box-shadow: 0 2px 4px var(--shadow-md);
   }
 
   .filter-tag.active {
-    background: #3b82f6;
+    background: var(--accent-primary);
     color: white;
-    border-color: #2563eb;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+    border-color: var(--accent-hover);
+    box-shadow: 0 2px 4px var(--shadow-accent-md);
   }
 
   .filter-category {
-    background: #f1f5f9;
-    color: #475569;
+    background: var(--category-bg);
+    color: var(--category-text);
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-size: 0.875rem;
@@ -288,29 +434,29 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
   }
 
   .filter-category:hover {
-    background: #e2e8f0;
+    background: var(--category-hover-bg);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(71, 85, 105, 0.15);
+    box-shadow: 0 2px 4px var(--shadow-sm);
   }
 
   .filter-category.active {
-    background: #6366f1;
-    color: white;
+    background: var(--category-active-bg);
+    color: var(--category-active-text);
     border-color: #4f46e5;
-    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 2px 4px var(--shadow-category);
   }
 
   .results-info {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--border-primary);
     font-size: 0.9375rem;
-    color: #64748b;
+    color: var(--text-tertiary);
     font-weight: 500;
   }
 
   .results-info #results-count {
-    color: #0f172a;
+    color: var(--text-primary);
     font-weight: 600;
   }
 
@@ -323,22 +469,22 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
   .empty-state {
     text-align: center;
     padding: 4rem 2rem;
-    background: white;
+    background: var(--bg-card);
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-primary);
     margin-top: 2rem;
   }
 
   .empty-state-text {
     font-size: 1.25rem;
-    color: #475569;
+    color: var(--text-secondary);
     margin: 0 0 0.5rem 0;
     font-weight: 500;
   }
 
   .empty-state-hint {
     font-size: 0.9375rem;
-    color: #94a3b8;
+    color: var(--text-quaternary);
     margin: 0;
   }
 
@@ -349,6 +495,18 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
 
     header {
       margin-bottom: 2.5rem;
+    }
+
+    .theme-toggle {
+      left: 1rem;
+      top: 1rem;
+      width: 40px;
+      height: 40px;
+    }
+
+    .theme-icon {
+      width: 18px;
+      height: 18px;
     }
 
     .github-link {
@@ -383,6 +541,79 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
     }
   }
 </style>
+
+<script>
+  (function() {
+    const THEME_STORAGE_KEY = 'theme-preference';
+    const html = document.documentElement;
+
+    function getSystemTheme() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function getStoredTheme() {
+      return localStorage.getItem(THEME_STORAGE_KEY);
+    }
+
+    function setTheme(preference) {
+      const storedPreference = preference;
+      let appliedTheme = preference;
+
+      if (preference === 'system') {
+        appliedTheme = getSystemTheme();
+      }
+
+      html.setAttribute('data-theme', appliedTheme);
+      localStorage.setItem(THEME_STORAGE_KEY, storedPreference);
+      updateThemeIcon(appliedTheme);
+    }
+
+    function updateThemeIcon(appliedTheme) {
+      const iconSun = document.querySelector('.icon-sun');
+      const iconMoon = document.querySelector('.icon-moon');
+
+      if (iconSun && iconMoon) {
+        if (appliedTheme === 'dark') {
+          iconSun.style.display = 'none';
+          iconMoon.style.display = 'block';
+        } else {
+          iconSun.style.display = 'block';
+          iconMoon.style.display = 'none';
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const current = getStoredTheme() || 'system';
+      let next;
+
+      if (current === 'system') {
+        next = 'light';
+      } else if (current === 'light') {
+        next = 'dark';
+      } else {
+        next = 'system';
+      }
+
+      setTheme(next);
+    }
+
+    const storedTheme = getStoredTheme() || 'system';
+    setTheme(storedTheme);
+
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const stored = getStoredTheme();
+      if (stored === 'system' || !stored) {
+        setTheme('system');
+      }
+    });
+  })();
+</script>
 
 <script>
   const searchBar = document.getElementById('search-bar');

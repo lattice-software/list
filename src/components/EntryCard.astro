@@ -68,8 +68,8 @@ function getDomain(url: string): string {
 
 <style>
   .entry-card {
-    background: white;
-    border: 1px solid #e2e8f0;
+    background: var(--bg-card, white);
+    border: 1px solid var(--border-primary, #e2e8f0);
     border-radius: 12px;
     padding: 1.75rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -84,7 +84,7 @@ function getDomain(url: string): string {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    color: #64748b;
+    color: var(--text-tertiary, #64748b);
     opacity: 0.6;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -93,7 +93,7 @@ function getDomain(url: string): string {
   }
 
   .edit-icon:hover {
-    color: #0f172a;
+    color: var(--text-primary, #0f172a);
     opacity: 1;
   }
 
@@ -109,7 +109,7 @@ function getDomain(url: string): string {
   }
 
   .entry-card:hover {
-    border-color: #cbd5e1;
+    border-color: var(--border-secondary, #cbd5e1);
   }
 
   .entry-card.hidden {
@@ -125,14 +125,14 @@ function getDomain(url: string): string {
   }
 
   .card-title a {
-    color: #0f172a;
+    color: var(--text-primary, #0f172a);
     text-decoration: none;
     transition: color 0.2s ease;
     display: inline-block;
   }
 
   .card-title a:hover {
-    color: #3b82f6;
+    color: var(--accent-primary, #3b82f6);
   }
 
   .card-description-wrapper {
@@ -141,7 +141,7 @@ function getDomain(url: string): string {
 
   .card-description {
     margin: 0;
-    color: #475569;
+    color: var(--text-secondary, #475569);
     line-height: 1.65;
     font-size: 0.9375rem;
   }
@@ -150,7 +150,7 @@ function getDomain(url: string): string {
     margin-top: 0.5rem;
     background: none;
     border: none;
-    color: #3b82f6;
+    color: var(--accent-primary, #3b82f6);
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
@@ -160,7 +160,7 @@ function getDomain(url: string): string {
   }
 
   .read-more-btn:hover {
-    color: #2563eb;
+    color: var(--accent-hover, #2563eb);
     text-decoration: underline;
   }
 
@@ -171,8 +171,8 @@ function getDomain(url: string): string {
   }
 
   .tag {
-    background: #eff6ff;
-    color: #1e40af;
+    background: var(--tag-bg, #eff6ff);
+    color: var(--tag-text, #1e40af);
     padding: 0.375rem 0.875rem;
     border-radius: 6px;
     font-size: 0.8125rem;
@@ -184,16 +184,16 @@ function getDomain(url: string): string {
   }
 
   .tag:hover {
-    background: #dbeafe;
+    background: var(--tag-hover-bg, #dbeafe);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.15);
-    border-color: #bfdbfe;
+    box-shadow: 0 2px 4px var(--shadow-md, rgba(30, 64, 175, 0.15));
+    border-color: var(--border-secondary, #bfdbfe);
   }
 
   .tag.active {
-    background: #3b82f6;
+    background: var(--accent-primary, #3b82f6);
     color: white;
-    border-color: #2563eb;
+    border-color: var(--accent-hover, #2563eb);
   }
 
   .card-links {
@@ -201,12 +201,12 @@ function getDomain(url: string): string {
     flex-wrap: wrap;
     gap: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--border-tertiary, #f1f5f9);
     margin-top: 0.25rem;
   }
 
   .card-links .link {
-    color: #3b82f6;
+    color: var(--accent-primary, #3b82f6);
     text-decoration: none;
     font-size: 0.875rem;
     font-weight: 500;
@@ -217,15 +217,15 @@ function getDomain(url: string): string {
   }
 
   .card-links .link:hover {
-    color: #2563eb;
+    color: var(--accent-hover, #2563eb);
   }
 
   .card-links .link:hover .link-domain {
-    color: #64748b;
+    color: var(--text-tertiary, #64748b);
   }
 
   .link-domain {
-    color: #94a3af;
+    color: var(--text-quaternary, #94a3af);
     font-weight: 400;
     font-size: 0.8125rem;
     transition: color 0.2s ease;
