@@ -45,7 +45,10 @@ function getDomain(url: string): string {
     </a>
   </h3>
 
-  <p class="card-description">{entry.description}</p>
+  <div class="card-description-wrapper">
+    <p class="card-description" data-full-text={entry.description}>{entry.description}</p>
+    <button class="read-more-btn" style="display: none;">Read more</button>
+  </div>
 
   <div class="card-tags">
     {entry.tags.map(tag => (
@@ -132,12 +135,33 @@ function getDomain(url: string): string {
     color: #3b82f6;
   }
 
+  .card-description-wrapper {
+    flex: 1;
+  }
+
   .card-description {
     margin: 0;
     color: #475569;
     line-height: 1.65;
-    flex: 1;
     font-size: 0.9375rem;
+  }
+
+  .read-more-btn {
+    margin-top: 0.5rem;
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+    text-align: left;
+  }
+
+  .read-more-btn:hover {
+    color: #2563eb;
+    text-decoration: underline;
   }
 
   .card-tags {
@@ -208,3 +232,41 @@ function getDomain(url: string): string {
   }
 
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const MAX_LENGTH = 150;
+    const descriptionElements = document.querySelectorAll('.card-description[data-full-text]');
+
+    descriptionElements.forEach(desc => {
+      const fullText = desc.getAttribute('data-full-text') || '';
+      const wrapper = desc.closest('.card-description-wrapper');
+      const readMoreBtn = wrapper?.querySelector('.read-more-btn');
+
+      if (!readMoreBtn || fullText.length <= MAX_LENGTH) {
+        return;
+      }
+
+      let isExpanded = false;
+      const truncatedText = fullText.slice(0, MAX_LENGTH) + '...';
+
+      desc.textContent = truncatedText;
+      desc.classList.add('truncated');
+      readMoreBtn.style.display = 'block';
+      readMoreBtn.textContent = 'Read more';
+
+      readMoreBtn.addEventListener('click', () => {
+        isExpanded = !isExpanded;
+        if (isExpanded) {
+          desc.textContent = fullText;
+          desc.classList.remove('truncated');
+          readMoreBtn.textContent = 'Show less';
+        } else {
+          desc.textContent = truncatedText;
+          desc.classList.add('truncated');
+          readMoreBtn.textContent = 'Read more';
+        }
+      });
+    });
+  });
+</script>
