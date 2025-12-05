@@ -25,6 +25,12 @@ const entriesData = entryFiles.map(filename => {
 // Get all unique tags and categories
 const allTags = [...new Set(entriesData.flatMap(entry => entry.tags))].sort();
 const allCategories = [...new Set(entriesData.map(entry => entry.category))].sort();
+
+// Helper to construct URLs with base path
+const baseUrl = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const staticPageUrl = `${baseUrl}static`;
 ---
 
 <html lang="en">
@@ -69,6 +75,9 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
         </a>
         <h1>Lattice QFT Software</h1>
         <p class="subtitle">Community-curated list of useful software and repositories for lattice quantum field theory</p>
+        <p class="static-note">
+          <a href={staticPageUrl}>Static version</a>
+        </p>
       </header>
 
       <div class="controls">
@@ -309,6 +318,22 @@ const allCategories = [...new Set(entriesData.map(entry => entry.category))].sor
     margin: 0;
     font-weight: 400;
     line-height: 1.5;
+  }
+
+  .static-note {
+    font-size: 0.9375rem;
+    color: var(--text-quaternary);
+    margin: 0.5rem 0 0 0;
+  }
+
+  .static-note a {
+    color: var(--accent-primary);
+    text-decoration: none;
+  }
+
+  .static-note a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
   }
 
   .controls {

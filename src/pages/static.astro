@@ -1,0 +1,405 @@
+---
+import yaml from 'js-yaml';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+
+// Get entries directory relative to project root
+const entriesDir = join(process.cwd(), 'src', 'data', 'entries');
+
+// Load all YAML entry files
+const entryFiles = readdirSync(entriesDir).filter(f => f.endsWith('.yaml'));
+
+// Convert to array with IDs derived from filenames
+const entriesData = entryFiles.map(filename => {
+  const id = filename.replace('.yaml', '');
+  const filePath = join(entriesDir, filename);
+  const fileContent = readFileSync(filePath, 'utf-8');
+  const data = yaml.load(fileContent) as any;
+  return {
+    id,
+    ...data
+  };
+});
+
+// Group entries by category
+const entriesByCategory = entriesData.reduce((acc, entry) => {
+  const category = entry.category || 'uncategorized';
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(entry);
+  return acc;
+}, {} as Record<string, typeof entriesData>);
+
+// Sort categories and entries within each category
+const sortedCategories = Object.keys(entriesByCategory).sort();
+sortedCategories.forEach(category => {
+  entriesByCategory[category].sort((a, b) => a.title.localeCompare(b.title));
+});
+
+// Extract domain from URL
+function getDomain(url: string): string {
+  try {
+    const urlObj = new URL(url);
+    let hostname = urlObj.hostname;
+    if (hostname.startsWith('www.')) {
+      hostname = hostname.slice(4);
+    }
+    return hostname;
+  } catch {
+    return url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+  }
+}
+
+// Find repository link for title, or use first link
+function getTitleLink(entry: typeof entriesData[0]) {
+  return entry.links.find(link => link.title.toLowerCase() === 'repository') || entry.links[0];
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Community-curated list of useful software and repositories for lattice quantum field theory" />
+    <title>Lattice QFT Software List - Static</title>
+    <script is:inline>
+      (function() {
+        const THEME_STORAGE_KEY = 'theme-preference';
+        const html = document.documentElement;
+
+        function getSystemTheme() {
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function getStoredTheme() {
+          return localStorage.getItem(THEME_STORAGE_KEY);
+        }
+
+        const stored = getStoredTheme() || 'system';
+        const applied = stored === 'system' ? getSystemTheme() : stored;
+        html.setAttribute('data-theme', applied);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="https://github.com/lattice-software/list" target="_blank" rel="noopener noreferrer" class="github-link">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>See on GitHub</span>
+        </a>
+        <h1>Lattice QFT Software</h1>
+        <p class="subtitle">Community-curated list of useful software and repositories for lattice quantum field theory</p>
+        <p class="static-note">
+          <a href={import.meta.env.BASE_URL}>Interactive version</a> • Static list
+        </p>
+      </header>
+
+      <div class="entries-list">
+        {sortedCategories.map(category => (
+          <section class="category-section">
+            <h2 class="category-title">{category}</h2>
+            <ul class="entries">
+              {entriesByCategory[category].map(entry => {
+                const titleLink = getTitleLink(entry);
+                return (
+                  <li class="entry">
+                    <div class="entry-header">
+                      <h3 class="entry-title">
+                        <a href={titleLink.url} target="_blank" rel="noopener noreferrer">
+                          {entry.title}
+                        </a>
+                      </h3>
+                      {entry.tags && entry.tags.length > 0 && (
+                        <div class="entry-tags">
+                          {entry.tags.map(tag => (
+                            <span class="tag">{tag}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <p class="entry-description">{entry.description}</p>
+                    {entry.links && entry.links.length > 0 && (
+                      <div class="entry-links">
+                        {entry.links.map(link => (
+                          <a href={link.url} target="_blank" rel="noopener noreferrer" class="link">
+                            {link.title}
+                            <span class="link-domain">({getDomain(link.url)})</span>
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  :global(html) {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color-scheme: light dark;
+  }
+
+  :global(html[data-theme="light"]) {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --text-primary: #1f2937;
+    --text-secondary: #475569;
+    --text-tertiary: #64748b;
+    --text-quaternary: #94a3b8;
+    --border-primary: #e2e8f0;
+    --accent-primary: #3b82f6;
+    --accent-hover: #2563eb;
+    --tag-bg: #eff6ff;
+    --tag-text: #1e40af;
+    --category-text: #475569;
+  }
+
+  :global(html[data-theme="dark"]) {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #64748b;
+    --text-quaternary: #94a3b8;
+    --border-primary: #334155;
+    --accent-primary: #60a5fa;
+    --accent-hover: #3b82f6;
+    --tag-bg: #1e3a8a;
+    --tag-text: #93c5fd;
+    --category-text: #cbd5e1;
+  }
+
+  :global(html) {
+    color: var(--text-primary);
+  }
+
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .github-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .github-link:hover {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-size: 1.125rem;
+    color: var(--text-tertiary);
+    margin: 0 0 0.5rem 0;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .static-note {
+    font-size: 0.9375rem;
+    color: var(--text-quaternary);
+    margin: 0;
+  }
+
+  .static-note a {
+    color: var(--accent-primary);
+    text-decoration: none;
+  }
+
+  .static-note a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  .entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .category-section {
+    break-inside: avoid;
+  }
+
+  .category-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--category-text);
+    margin: 0 0 1.25rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border-primary);
+    text-transform: capitalize;
+  }
+
+  .entries {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .entry {
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-primary);
+  }
+
+  .entry:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .entry-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .entry-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .entry-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .entry-title a:hover {
+    color: var(--accent-primary);
+  }
+
+  .entry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.25rem 0.625rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .entry-description {
+    margin: 0.5rem 0 0.75rem 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.9375rem;
+  }
+
+  .entry-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .entry-links .link {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .entry-links .link:hover {
+    color: var(--accent-hover);
+  }
+
+  .link-domain {
+    color: var(--text-quaternary);
+    font-weight: 400;
+    font-size: 0.8125rem;
+    margin-left: 0.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 2rem 1rem;
+    }
+
+    .github-link {
+      position: static;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+    }
+
+    .entries-list {
+      gap: 2rem;
+    }
+
+    .entry {
+      padding-bottom: 1.5rem;
+    }
+
+    .entry-header {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+</style>

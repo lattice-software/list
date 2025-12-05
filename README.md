@@ -2,8 +2,13 @@
 
 **[View List →](https://lattice-software.github.io/list)**
 
+**[View Static Version of List →](https://lattice-software.github.io/list/static)**
+
 Community-curated list of useful software and repositories for lattice quantum field theory.
 
+Please contribute!
+Entries may have errors or missing information, and your software may not be listed yet.
+Reach out if you want to be added for direct push access.
 
 ## How to Contribute
 
