@@ -64,6 +64,7 @@ const staticPageUrl = `${baseUrl}static`;
         <svg class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path class="icon-sun" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
           <path class="icon-moon" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          <path class="icon-monitor" d="M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1M12 15v6M8 21h8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       <header>
@@ -284,19 +285,31 @@ const staticPageUrl = `${baseUrl}static`;
   }
 
   .icon-sun {
-    display: block;
+    display: none;
   }
 
   .icon-moon {
     display: none;
   }
 
-  :global(html[data-theme="dark"]) .icon-sun {
+  .icon-monitor {
+    display: block;
+  }
+
+  .theme-toggle[data-mode="light"] .icon-sun {
+    display: block;
+  }
+
+  .theme-toggle[data-mode="light"] .icon-monitor {
     display: none;
   }
 
-  :global(html[data-theme="dark"]) .icon-moon {
+  .theme-toggle[data-mode="dark"] .icon-moon {
     display: block;
+  }
+
+  .theme-toggle[data-mode="dark"] .icon-monitor {
+    display: none;
   }
 
   .github-link svg {
@@ -590,21 +603,13 @@ const staticPageUrl = `${baseUrl}static`;
 
       html.setAttribute('data-theme', appliedTheme);
       localStorage.setItem(THEME_STORAGE_KEY, storedPreference);
-      updateThemeIcon(appliedTheme);
+      updateThemeIcon(appliedTheme, storedPreference);
     }
 
-    function updateThemeIcon(appliedTheme) {
-      const iconSun = document.querySelector('.icon-sun');
-      const iconMoon = document.querySelector('.icon-moon');
-
-      if (iconSun && iconMoon) {
-        if (appliedTheme === 'dark') {
-          iconSun.style.display = 'none';
-          iconMoon.style.display = 'block';
-        } else {
-          iconSun.style.display = 'block';
-          iconMoon.style.display = 'none';
-        }
+    function updateThemeIcon(appliedTheme, storedPreference) {
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.setAttribute('data-mode', storedPreference || 'system');
       }
     }
 
@@ -624,6 +629,7 @@ const staticPageUrl = `${baseUrl}static`;
     }
 
     const storedTheme = getStoredTheme() || 'system';
+    const appliedTheme = storedTheme === 'system' ? getSystemTheme() : storedTheme;
     setTheme(storedTheme);
 
     const themeToggle = document.getElementById('theme-toggle');
@@ -634,7 +640,9 @@ const staticPageUrl = `${baseUrl}static`;
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
       const stored = getStoredTheme();
       if (stored === 'system' || !stored) {
-        setTheme('system');
+        const appliedTheme = getSystemTheme();
+        updateThemeIcon(appliedTheme, 'system');
+        html.setAttribute('data-theme', appliedTheme);
       }
     });
   })();
