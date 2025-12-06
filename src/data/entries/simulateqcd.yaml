@@ -4,9 +4,15 @@ description:
 links:
   - title: Repository
     url: https://github.com/LatticeQCD/SIMULATeQCD
+  - title: Paper
+    url: https://arxiv.org/abs/2306.01098
+  - title: Thesis
+    url: https://pub.uni-bielefeld.de/record/2956493
 tags:
   - qcd
-  - cuda
   - c++
+  - cuda
+  - hip
+  - mpi
   - gpu
 category: simulation

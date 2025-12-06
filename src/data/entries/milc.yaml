@@ -1,9 +1,10 @@
 title: MILC
-description: MILC collaboration code for lattice QCD calculations
+description: MILC collaboration code for lattice QCD calculations.
 links:
   - title: Repository
     url: https://github.com/milc-qcd/milc_qcd
 tags:
   - qcd
   - c
+  - mpi
 category: simulation

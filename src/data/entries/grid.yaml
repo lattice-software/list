@@ -1,10 +1,18 @@
 title: Grid
-description: Data parallel C++ mathematical object library
+description: Data parallel C++ mathematical object library.
 links:
   - title: Repository
     url: https://github.com/paboyle/Grid/
+  - title: Paper (accelerator port)
+    url: https://arxiv.org/abs/2203.06777
+  - title: Paper
+    url: https://arxiv.org/abs/1512.03487
 tags:
   - qcd
   - c++
+  - cuda
+  - hip
+  - sycl
+  - mpi
   - gpu
 category: simulation

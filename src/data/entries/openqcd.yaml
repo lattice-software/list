@@ -1,9 +1,10 @@
 title: openQCD
-description: Simulation programs for lattice QCD
+description: openQCD is a code for performing high performance lattice QCD simulations with (improved) Wilson fermions in the fundamental representation.
 links:
   - title: Repository
     url: https://luscher.web.cern.ch/luscher/openQCD
 tags:
   - qcd
   - c
+  - mpi
 category: simulation

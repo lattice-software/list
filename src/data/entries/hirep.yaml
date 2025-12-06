@@ -1,11 +1,17 @@
 title: HiRep
-description: Lattice QCD code with CUDA support
+description: HiRep is an open-source software suite for high-performance lattice field theory simulations with dynamical Wilson fermions in higher representations of SU(N) and SO(N) gauge groups. The code supports GPU acceleration on NVIDIA and AMD GPUs.
 links:
   - title: Repository
     url: https://github.com/claudiopica/HiRep/tree/HiRep-CUDA
+  - title: Paper (HiRep v2/GPU port)
+    url: https://arxiv.org/abs/2503.06721
+  - title: Paper
+    url: https://arxiv.org/abs/0805.2058
 tags:
   - qcd
+  - c
   - cuda
-  - c++
+  - hip
+  - mpi
   - gpu
 category: simulation

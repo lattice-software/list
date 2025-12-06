@@ -1,11 +1,11 @@
 title: openQxD
 description:
-  The simulation program is based on a very flexible version of the RHMC algorithm.
-  Doublets of quarks with the same electric charge can also conveniently be simulated by using the HMC algorithm
+  The simulation program is based on a very flexible version of the RHMC algorithm. Doublets of quarks with the same electric charge can also conveniently be simulated by using the HMC algorithm.
 links:
   - title: Repository
     url: https://gitlab.com/rcstar/openQxD
 tags:
   - qcd
-  - c++
+  - c
+  - mpi
 category: simulation

@@ -1,9 +1,12 @@
 title: Bridge++
-description: Bridge++ is a code set for numerical simulations of lattice gauge theories including QCD
+description: Bridge++ is a code set for numerical simulations of lattice gauge theories including QCD.
 links:
   - title: Repository
     url: https://bridge.kek.jp/Lattice-code
+  - title: Paper
+    url: https://doi.org/10.1088/1742-6596/523/1/012046
 tags:
   - qcd
   - c++
+  - mpi
 category: simulation

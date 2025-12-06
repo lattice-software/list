@@ -1,12 +1,12 @@
 title: Chroma
 description:
-  The Chroma package supports data-parallel programming constructs for lattice field theory and in particular lattice QCD.
-  It uses the SciDAC QDP++ data-parallel programming (in C++) that presents a single high-level code image to the user,
-  but can generate highly optimized code for many architectural systems including single node workstations, multi and many-core nodes, clusters of nodes via QMP, and classic vector computers.
+  The Chroma package supports data-parallel programming constructs for lattice field theory and in particular lattice QCD. It uses the SciDAC QDP++ data-parallel programming (in C++) that presents a single high-level code image to the user, but can generate highly optimized code for many architectural systems including single node workstations, multi and many-core nodes, clusters of nodes via QMP, and classic vector computers.
 links:
   - title: Repository
     url: https://jeffersonlab.github.io/chroma
+  - title: Paper
+    url: https://arxiv.org/abs/hep-lat/0409003
 tags:
   - qcd
   - c++
-category: analysis
+category: simulation

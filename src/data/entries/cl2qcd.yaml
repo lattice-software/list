@@ -4,9 +4,11 @@ description:
 links:
   - title: Repository
     url: https://gitlab.itp.uni-frankfurt.de/lattice-qcd/ag-philipsen/cl2qcd
+  - title: Paper
+    url: https://arxiv.org/abs/1411.5219
 tags:
   - qcd
-  - opencl
   - c++
+  - opencl
   - gpu
 category: simulation
